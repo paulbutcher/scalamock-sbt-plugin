@@ -1,5 +1,5 @@
 sbtPlugin := true
 
-name := "borachio-sbt-plugin"
+name := "scalamock-sbt-plugin"
 
-organization := "com.borachio"
+organization := "org.scalamock"

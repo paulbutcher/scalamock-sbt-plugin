@@ -21,7 +21,7 @@
 import sbt._
 import Keys._
 
-object BorachioPlugin extends Plugin {
+object ScalaMockPlugin extends Plugin {
   
   lazy val GenerateMocks = config("generate-mocks") hide
   lazy val Mock = config("mock") extend(Compile)
@@ -53,11 +53,11 @@ object BorachioPlugin extends Plugin {
       scalacOptions in GenerateMocks <++= 
         (generatedMockDirectory, generatedTestDirectory) map { (gm, gt) =>
           Seq(
-            "-Xplugin-require:borachio",
+            "-Xplugin-require:scalamock",
             "-Ylog:generatemocks",
             "-Ystop-after:generatemocks",
-            "-P:borachio:generatemocks:"+ gm,
-            "-P:borachio:generatetest:"+ gt)
+            "-P:scalamock:generatemocks:"+ gm,
+            "-P:scalamock:generatetest:"+ gt)
         },
       sources in Test <++= collectSource(generatedTestDirectory),
       sources in Mock <++= collectSource(generatedMockDirectory),
