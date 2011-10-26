@@ -51,11 +51,11 @@ object ScalaMockPlugin extends Plugin {
       generatedMockDirectory <<= sourceManaged(_ / "mock" / "scala"),
       generatedTestDirectory <<= sourceManaged(_ / "test" / "scala"),
       scalacOptions in GenerateMocks <++= 
-        (generatedMockDirectory, generatedTestDirectory) map { (gm, gt) =>
+        (generatedMockDirectory, generatedTestDirectory, scalaVersion) map { (gm, gt, sv) =>
           Seq(
             "-Xplugin-require:scalamock",
             "-Ylog:generatemocks",
-            "-Ystop-after:generatemocks",
+            if (sv startsWith "2.8") "-Ystop:superaccessors" else "-Ystop-after:generatemocks",
             "-P:scalamock:generatemocks:"+ gm,
             "-P:scalamock:generatetest:"+ gt)
         },
